@@ -1,7 +1,8 @@
 'use client'
 
 import { sono } from "./fonts"
-import { ChangeEvent, KeyboardEvent, use, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, MouseEventHandler, useRef, useState } from 'react';
+import { saveThought } from "../lib/actions";
 
 const COLS = 30;
 const ROWS = 15;
@@ -15,9 +16,11 @@ type Snapshot = {
 export default function ThoughtInput() {
 
   const [recorder, setRecorder] = useState({recording: false, startTime: -1});
+  const [thought, setThought] = useState("");
   const timelineRef = useRef<Snapshot[]>([])
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setThought(event.target.value);
 
     if (!recorder.recording) {
       setRecorder(prevRecorder => ({...prevRecorder, recording: true, startTime: Date.now()}));
@@ -25,11 +28,11 @@ export default function ThoughtInput() {
     }
 
     if (recorder.recording) timelineRef.current.push({ms: Date.now() - recorder.startTime, text: event.target.value});
+
     console.log(timelineRef.current);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
-
     switch (event.key) {
       case 'Enter':
         event.preventDefault();
@@ -46,13 +49,12 @@ export default function ThoughtInput() {
       default:
         break;
     }
-
   }
 
   return (
-    <div className="flex flex-col">
-      <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} onKeyDown={handleKeyDown} onChange={handleChange} wrap="hard" autoComplete="off" autoCorrect="off" autoFocus={true}></textarea>
-      <button className="my-8 ">Stop</button>
-    </div>
+    <form className="flex flex-col" action={saveThought}>
+      <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} name="thought"  value={thought} onKeyDown={handleKeyDown} onChange={handleChange} autoComplete="off" autoCorrect="off" spellCheck={false} autoFocus={true}></textarea>
+      <button type="submit" className="my-8">Save</button>
+    </form>
   )
 }
