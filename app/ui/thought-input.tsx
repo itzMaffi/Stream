@@ -1,7 +1,7 @@
 'use client'
 
 import { sono } from "./fonts"
-import { ChangeEvent, KeyboardEvent, MouseEventHandler, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, MouseEvent, useRef, useState } from 'react';
 import { saveThought } from "../lib/actions";
 
 const COLS = 30;
@@ -23,7 +23,7 @@ export default function ThoughtInput() {
     setThought(event.target.value);
 
     if (!recorder.recording) {
-      setRecorder(prevRecorder => ({...prevRecorder, recording: true, startTime: Date.now()}));
+      setRecorder({recording: true, startTime: Date.now()});
       timelineRef.current.push({ms: 0, text: event.target.value});
     }
 
@@ -51,10 +51,17 @@ export default function ThoughtInput() {
     }
   }
 
+  function handleSave(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    setRecorder({recording: false, startTime: -1});
+    timelineRef.current = [];
+    setThought("");
+  }
+
   return (
     <form className="flex flex-col" action={saveThought}>
       <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} name="thought"  value={thought} onKeyDown={handleKeyDown} onChange={handleChange} autoComplete="off" autoCorrect="off" spellCheck={false} autoFocus={true}></textarea>
-      <button type="submit" className="my-8">Save</button>
+      <button type="submit" className="my-8" onClick={handleSave}>Save</button>
     </form>
   )
 }
