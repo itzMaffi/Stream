@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { inter } from './ui/fonts'
+import { quicksand } from './ui/fonts'
 import './ui/globals.css'
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`h-screen ${inter.className} `}>{children}</body>
+      <body className={`h-screen ${quicksand.className} `}>{children}</body>
     </html>
   )
 }
