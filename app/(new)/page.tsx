@@ -1,4 +1,4 @@
-import ThoughtInput from "./ui/thought-input"
+import ThoughtInput from "../ui/thought-input"
 
 export default function Home() {
   return (

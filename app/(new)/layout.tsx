@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { quicksand } from './ui/fonts'
+import { quicksand } from '../ui/fonts'
 import './ui/globals.css'
 
 export const metadata: Metadata = {
