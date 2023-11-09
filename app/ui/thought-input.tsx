@@ -1,6 +1,5 @@
 'use client'
 
-import style from './thought-input.module.css'
 import { sono } from "./fonts"
 import { KeyboardEvent } from 'react';
 
@@ -20,7 +19,7 @@ export default function ThoughtInput() {
     }
 
   }
-  
+
   return (
     <textarea className={`rounded-md shadow-md resize-none ${sono.className} text-lg`} cols={30} rows={15} maxLength={450} onKeyDown={handleKeyDown}></textarea>
   )
