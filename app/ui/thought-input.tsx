@@ -1,18 +1,28 @@
 'use client'
 
 import { sono } from "./fonts"
-import { KeyboardEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
+
+const COLS = 30;
+const ROWS = 15;
+const MAX_LENGTH = COLS * ROWS;
 
 export default function ThoughtInput() {
 
-  function handleKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
-  
-    switch (e.key) {
+  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
+
+    switch (event.key) {
       case 'Enter':
-        e.preventDefault();
+        event.preventDefault();
+        if (event.currentTarget.value.length < MAX_LENGTH) {
+          event.currentTarget.value = event.currentTarget.value + ' '.repeat(COLS - (event.currentTarget.value.length % COLS));
+        }
         break;
       case 'Tab':
-        e.preventDefault();
+        event.preventDefault();
+        if (event.currentTarget.value.length < MAX_LENGTH) {
+          event.currentTarget.value = event.currentTarget.value + ' '.repeat(Math.min(4, MAX_LENGTH - event.currentTarget.value.length));
+        }
         break;
       default:
         break;
@@ -21,6 +31,6 @@ export default function ThoughtInput() {
   }
 
   return (
-    <textarea className={`rounded-md shadow-md resize-none ${sono.className} text-lg`} cols={30} rows={15} maxLength={450} onKeyDown={handleKeyDown}></textarea>
+    <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} onKeyDown={handleKeyDown} wrap="hard" autoComplete="off" autoCorrect="off" autoFocus={true}></textarea>
   )
 }
