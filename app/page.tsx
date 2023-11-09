@@ -1,6 +1,7 @@
+import ThoughtInput from "./ui/thought-input"
 
 export default function Home() {
   return (
-    <div>HELLO WORLD</div>
+    <ThoughtInput></ThoughtInput>
   )
 }
