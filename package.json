@@ -16,6 +16,7 @@
     "production:build": "npx prisma generate && npx prisma migrate deploy && next build"
   },
   "dependencies": {
+    "@prisma/client": "^5.5.2",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
