@@ -63,7 +63,7 @@ export default function ThoughtInput() {
   return (
     <div className="flex flex-col">
       <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} name="thought" value={thought} onKeyDown={handleKeyDown} onChange={handleChange} autoComplete="off" autoCorrect="off" spellCheck={false} autoFocus={true}></textarea>
-      <button type="submit" className="my-8" onClick={handleSave}>Save</button>
+      <button type="submit" className="my-8 mx-auto py-2 px-4 bg-teal-500 rounded-md text-white font-semibold" onClick={handleSave}>Save</button>
     </div>
   )
 }
