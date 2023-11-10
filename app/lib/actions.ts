@@ -1,5 +1,7 @@
 'use server'
 
-export async function saveThought(formData: FormData) {
-  console.log(formData)
+import { Snapshot } from './types/snapshot'
+
+export async function saveThought(timeline: Snapshot[], thought: string) {
+  
 }
