@@ -1,6 +1,7 @@
 'use client'
 
 import { sono } from "./fonts"
+import { CiSaveDown1 } from 'react-icons/ci'
 import { ChangeEvent, KeyboardEvent, MouseEvent, useState, startTransition, useRef } from 'react';
 import { saveThought } from "../lib/actions";
 import { Snapshot } from "../lib/types/snapshot";
@@ -53,17 +54,18 @@ export default function ThoughtInput() {
     event.preventDefault();
 
     startTransition( ()=> {
-      saveThought(timelineRef.current, thought);
-      timelineRef.current = [];
-      setRecorder({recording: false, startTime: -1});
-      setThought("");
+      saveThought(timelineRef.current, thought).then(() => {
+        setRecorder({recording: false, startTime: -1});
+        setThought("");
+        timelineRef.current = [];
+      });
     })
   }
 
   return (
     <div className="flex flex-col">
       <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} name="thought" value={thought} onKeyDown={handleKeyDown} onChange={handleChange} autoComplete="off" autoCorrect="off" spellCheck={false} autoFocus={true}></textarea>
-      <button type="submit" className="my-8 mx-auto py-2 px-4 bg-teal-400 hover:bg-teal-500 rounded-md text-white font-semibold" onClick={handleSave}>Save</button>
+      <button type="submit" className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-semibold text-" onClick={handleSave}><CiSaveDown1 className="stroke-1"/></button>
     </div>
   )
 }
