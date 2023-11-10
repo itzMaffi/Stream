@@ -13,7 +13,7 @@ export default async function History() {
   })
 
   return (
-    <div className="h-full flex items-center">
+    <div className="h-full flex items-center overflow-x-auto snap-x snap-mandatory">
       {
         idObjs && idObjs.map( idObj => <ThoughtPresent key={idObj.id} id={idObj.id}></ThoughtPresent>)
       }
