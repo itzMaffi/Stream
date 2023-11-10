@@ -78,7 +78,6 @@ export default function ThoughtInput() {
         spellCheck={false} 
         autoFocus={true}></textarea>
       <button 
-        type="submit" 
         className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-semibold" 
         onClick={handleSave}>
           <CiSaveDown1 className="stroke-1"/>
