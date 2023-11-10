@@ -64,8 +64,25 @@ export default function ThoughtInput() {
 
   return (
     <div className="flex flex-col">
-      <textarea className={`rounded-md p-4 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} cols={COLS} rows={ROWS} maxLength={MAX_LENGTH} name="thought" value={thought} onKeyDown={handleKeyDown} onChange={handleChange} autoComplete="off" autoCorrect="off" spellCheck={false} autoFocus={true}></textarea>
-      <button type="submit" className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-semibold text-" onClick={handleSave}><CiSaveDown1 className="stroke-1"/></button>
+      <textarea 
+        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`} 
+        cols={COLS} 
+        rows={ROWS} 
+        maxLength={MAX_LENGTH} 
+        name="thought" 
+        value={thought} 
+        onKeyDown={handleKeyDown} 
+        onChange={handleChange} 
+        autoComplete="off" 
+        autoCorrect="off" 
+        spellCheck={false} 
+        autoFocus={true}></textarea>
+      <button 
+        type="submit" 
+        className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-semibold" 
+        onClick={handleSave}>
+          <CiSaveDown1 className="stroke-1"/>
+      </button>
     </div>
   )
 }
