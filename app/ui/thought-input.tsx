@@ -13,19 +13,20 @@ const MAX_LENGTH = COLS * ROWS;
 
 export default function ThoughtInput() {
 
-  const [recorder, setRecorder] = useState({recording: false, startTime: -1});
   const [thought, setThought] = useState("");
   const timelineRef = useRef<Snapshot[]>([]);
+  const recorder = useRef({recording: false, startTime: -1});
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const thoughtString = event.target.value;
 
-    if (!recorder.recording) {
-      setRecorder({recording: true, startTime: Date.now()});
+    if (!recorder.current.recording) {
+      recorder.current.recording = true, 
+      recorder.current.startTime = Date.now();
       timelineRef.current.push({ms: 0, text: thoughtString});
     }
     
-    if (recorder.recording) timelineRef.current.push({ms: Date.now() - recorder.startTime, text: thoughtString});
+    if (recorder.current.recording) timelineRef.current.push({ms: Date.now() - recorder.current.startTime, text: thoughtString});
     
     setThought(thoughtString);
   }
@@ -56,7 +57,8 @@ export default function ThoughtInput() {
 
     startTransition( ()=> {
       saveThought(timelineRef.current, thought).then(() => {
-        setRecorder({recording: false, startTime: -1});
+        recorder.current.recording = false;
+        recorder.current.startTime = -1;
         setThought("");
         timelineRef.current = [];
       });
