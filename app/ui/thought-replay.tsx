@@ -1,9 +1,10 @@
 'use client'
 
 import { sono } from "./fonts"
-import { FaArrowRotateLeft, FaPause } from 'react-icons/fa6'
+import { FaArrowRotateLeft, FaArrowLeft, FaPause } from 'react-icons/fa6'
 import moment from "moment"
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Snapshot } from "../lib/types/snapshot";
 
 const COLS = 30;
@@ -12,15 +13,46 @@ const MAX_LENGTH = COLS * ROWS;
 
 export default function ThoughtReplay({thought}: {thought: {createdAt: Date, thoughtString: string, thoughtTimeline: Snapshot[], }}) {
 
-  const [replayer, setReplayer] = useState({replaying: false, startTime: -1, now: -1});
   const [snapshot, setSnapshot] = useState(thought.thoughtString);
-  const timelineRef = useRef<Snapshot[]>(thought.thoughtTimeline);
+  const [replaying, setReplaying] = useState(false);
+  const timelineRef = useRef<Snapshot[]>([...thought.thoughtTimeline]);
+  const timerRef = useRef({startTime: -1, now: -1}) 
+  // timerRef cannot be bundled as an object in replaying because the setInterval callback will reference the initial value of the state. 
+  // Instead, we need to mutate the value of the property of the object, keeping the refernce intact. Additionally, it is not used for rendering.
+  const intervalRef = useRef<ReturnType<typeof setInterval>>();
 
+  useEffect(() => clearInterval(intervalRef.current), []);
 
   function handleReplay() {
-    setReplayer(prevReplayer => ({...prevReplayer, replaying: !prevReplayer.replaying}));
 
+    if (!replaying) {
+      setReplaying(true)
+      timerRef.current.startTime = Date.now();
+      timerRef.current.now = Date.now();
 
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(()=> {
+        timerRef.current.now = Date.now();
+
+        if (timelineRef.current[0]) {
+          const currentMs = timerRef.current.now - timerRef.current.startTime;
+          const currentSnapshot = timelineRef.current[0];
+
+          if (currentMs > currentSnapshot.ms) {
+            timelineRef.current.shift();
+            setSnapshot(currentSnapshot.text);
+          }
+        } else {
+          clearInterval(intervalRef.current);
+
+          setReplaying(false);
+          setSnapshot(thought.thoughtString);
+          timerRef.current.now = -1;
+          timerRef.current.startTime = -1;
+          timelineRef.current = [...thought.thoughtTimeline];
+        }
+      }, 10);
+    }
   }
 
   return (
@@ -35,13 +67,23 @@ export default function ThoughtReplay({thought}: {thought: {createdAt: Date, tho
         value={snapshot}
         disabled
       ></textarea>
-      <button 
-        className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-semibold" 
-        onClick={handleReplay}>
-          {
+      
+      <div className="relative flex justify-center">
+        <Link 
+          href="/history"
+          className="absolute left-0 my-8 p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white text-xl font-semibold">
+          <FaArrowLeft />
+        </Link>
+        <button 
+        className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-full text-white text-xl font-semibold" 
+        onClick={handleReplay}
+        disabled={replaying}>
+          <FaArrowRotateLeft />
+          {/* {
             replayer.replaying ? <FaPause /> : <FaArrowRotateLeft />
-          }
-      </button>
+          } */}
+        </button>
+      </div>
     </div>
   )
 }
