@@ -14,6 +14,7 @@ const MAX_LENGTH = COLS * ROWS;
 export default function ThoughtInput() {
 
   const [thought, setThought] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const timelineRef = useRef<Snapshot[]>([]);
   const recorder = useRef({recording: false, startTime: -1});
 
@@ -24,6 +25,7 @@ export default function ThoughtInput() {
       recorder.current.recording = true, 
       recorder.current.startTime = Date.now();
       timelineRef.current.push({ms: 0, text: thoughtString});
+      setDisabled(false);
     }
     
     if (recorder.current.recording) timelineRef.current.push({ms: Date.now() - recorder.current.startTime, text: thoughtString});
@@ -60,6 +62,7 @@ export default function ThoughtInput() {
         recorder.current.recording = false;
         recorder.current.startTime = -1;
         setThought("");
+        setDisabled(true);
         timelineRef.current = [];
       });
     })
@@ -84,8 +87,9 @@ export default function ThoughtInput() {
       </textarea>
       <div className="relative flex justify-center">
         <button 
-          className="my-8 p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white text-xl font-semibold " 
-          onClick={handleSave}>
+          className="my-8 p-2 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-full text-white text-xl font-semibold " 
+          onClick={handleSave}
+          disabled={disabled}>
             <FaArrowDown className="stroke-1"/>
         </button>
         <Link 
