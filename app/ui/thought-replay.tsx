@@ -1,21 +1,26 @@
 'use client'
 
 import { sono } from "./fonts"
-import { FaArrowRotateLeft } from 'react-icons/fa6'
+import { FaArrowRotateLeft, FaPause } from 'react-icons/fa6'
 import moment from "moment"
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { Snapshot } from "../lib/types/snapshot";
 
 const COLS = 30;
 const ROWS = 15;
 const MAX_LENGTH = COLS * ROWS;
 
-export default function ThoughtReplay({thought}: {thought: {createdAt: Date, thoughtString: string, thoughtTimeline: string, }}) {
+export default function ThoughtReplay({thought}: {thought: {createdAt: Date, thoughtString: string, thoughtTimeline: Snapshot[], }}) {
 
+  const [replayer, setReplayer] = useState({replaying: false, startTime: -1, now: -1});
   const [snapshot, setSnapshot] = useState(thought.thoughtString);
+  const timelineRef = useRef<Snapshot[]>(thought.thoughtTimeline);
 
 
   function handleReplay() {
-    console.log('clicked')
+    setReplayer(prevReplayer => ({...prevReplayer, replaying: !prevReplayer.replaying}));
+
+
   }
 
   return (
@@ -33,7 +38,9 @@ export default function ThoughtReplay({thought}: {thought: {createdAt: Date, tho
       <button 
         className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white font-semibold" 
         onClick={handleReplay}>
-          <FaArrowRotateLeft />
+          {
+            replayer.replaying ? <FaPause /> : <FaArrowRotateLeft />
+          }
       </button>
     </div>
   )
