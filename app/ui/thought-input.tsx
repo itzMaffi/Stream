@@ -19,14 +19,14 @@ export default function ThoughtInput() {
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const thoughtString = event.target.value;
 
-    setThought(thoughtString);
-
     if (!recorder.recording) {
       setRecorder({recording: true, startTime: Date.now()});
       timelineRef.current.push({ms: 0, text: thoughtString});
     }
-
+    
     if (recorder.recording) timelineRef.current.push({ms: Date.now() - recorder.startTime, text: thoughtString});
+    
+    setThought(thoughtString);
   }
 
   function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
