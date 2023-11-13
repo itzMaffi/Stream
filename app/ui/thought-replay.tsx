@@ -38,12 +38,12 @@ export default function ThoughtReplay({
   function handleReplay() {
     if (!replaying) {
       setReplaying(true);
-    if (timerRef.current.startTime === -1)
-      timerRef.current.startTime = Date.now();
+      if (timerRef.current.startTime === -1)
+        timerRef.current.startTime = Date.now();
 
-    timerRef.current.now = Date.now();
+      timerRef.current.now = Date.now();
 
-    if (timerRef.current.lastPauseTime !== -1)
+      if (timerRef.current.lastPauseTime !== -1)
         timerRef.current.pauseOffset =
           timerRef.current.pauseOffset +
           (timerRef.current.now - timerRef.current.lastPauseTime);
@@ -53,16 +53,16 @@ export default function ThoughtReplay({
         timerRef.current.now = Date.now();
 
         if (timelineRef.current[0]) {
-    const currentMs =
-      timerRef.current.now -
-      timerRef.current.startTime -
-      timerRef.current.pauseOffset;
-        const currentSnapshot = timelineRef.current[0];
+          const currentMs =
+            timerRef.current.now -
+            timerRef.current.startTime -
+            timerRef.current.pauseOffset;
+          const currentSnapshot = timelineRef.current[0];
 
-    if (currentMs > currentSnapshot.ms) {
-      timelineRef.current.shift();
-      setSnapshot(currentSnapshot.text);
-}
+          if (currentMs > currentSnapshot.ms) {
+            timelineRef.current.shift();
+            setSnapshot(currentSnapshot.text);
+          }
         } else {
           clearInterval(intervalRef.current);
 
@@ -76,10 +76,10 @@ export default function ThoughtReplay({
         }
       }, 10);
     } else {
-          clearInterval(intervalRef.current);
-    timerRef.current.lastPauseTime = Date.now();
-    setReplaying(false);
-  }
+      clearInterval(intervalRef.current);
+      timerRef.current.lastPauseTime = Date.now();
+      setReplaying(false);
+    }
   }
 
   return (
