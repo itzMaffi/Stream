@@ -31,9 +31,10 @@ export default async function ThoughtPresent({ id }: { id: string }) {
       ></textarea>
       <Link
         href={`/dashboard/history/${id}/visit`}
-        className="absolute bottom-2 right-2 invisible group-hover:visible p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white text-xl font-semibold"
+        className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 invisible group-hover:visible p-2 bg-stream-600 hover:bg-stream-700 rounded-2xl text-stream-50 font-medium"
       >
         <FaBookOpen />
+        <p>Open</p>
       </Link>
     </div>
   );

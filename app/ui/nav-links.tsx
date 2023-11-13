@@ -15,7 +15,7 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            className="p-4 rounded-2xl flex items-center bg-slate-50"
+            className="p-4 rounded-2xl flex items-center bg-stream-50 text-stream-800"
           >
             <LinkIcon className="me-2" />
             <p className='font-medium'>{link.name}</p>

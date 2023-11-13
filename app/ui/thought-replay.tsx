@@ -96,18 +96,13 @@ export default function ThoughtReplay({
         value={snapshot}
         disabled
       ></textarea>
-      <div className="relative flex justify-center">
-        <Link
-          href="/dashboard/history"
-          className="absolute left-0 my-8 p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white text-xl font-semibold"
-        >
-          <FaArrowLeft />
-        </Link>
+      <div className="my-8 flex justify-center">
         <button
-          className="my-8 mx-auto p-2 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-full text-white text-xl font-semibold"
+          className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 rounded-2xl text-stream-50 font-medium"
           onClick={handleReplay}
         >
-          {replaying ? <FaPause /> : <FaArrowRotateLeft />}
+          {replaying ? <><FaPause /><p>Pause</p></> : <><FaArrowRotateLeft /><p>Replay</p></>}
+          
         </button>
       </div>
     </div>

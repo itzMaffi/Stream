@@ -1,7 +1,7 @@
 'use client';
 
 import { sono } from './fonts';
-import { FaArrowDown, FaTrashCan } from 'react-icons/fa6';
+import { FaArrowDown, FaXmark } from 'react-icons/fa6';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -92,7 +92,6 @@ export default function ThoughtInput() {
 
   return (
     <div className="flex flex-col">
-      <p className="py-2 text-slate-400">New</p>
       <textarea
         className={`rounded-md p-8 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`}
         cols={COLS}
@@ -109,15 +108,15 @@ export default function ThoughtInput() {
       ></textarea>
       <div className="my-8 flex justify-between">
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-2xl text-white font-medium"
-          onClick={handleSave}
+          className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
+          onClick={handleDiscard}
         >
-          <FaTrashCan />
+          <FaXmark className="text-xl" />
           <p>Discard</p>
         </button>
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-2xl text-white font-medium"
-          onClick={handleDiscard}
+          className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 disabled:bg-slate-200 rounded-2xl text-stream-50 disabled:text-slate-400 font-medium"
+          onClick={handleSave}
           disabled={disabled}
         >
           <FaArrowDown />
