@@ -96,10 +96,9 @@ export default function ThoughtReplay({
         value={snapshot}
         disabled
       ></textarea>
-
       <div className="relative flex justify-center">
         <Link
-          href="/history"
+          href="/dashboard/history"
           className="absolute left-0 my-8 p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white text-xl font-semibold"
         >
           <FaArrowLeft />

@@ -98,7 +98,7 @@ export default function ThoughtInput() {
         spellCheck={false}
         autoFocus={true}
       ></textarea>
-      <div className="relative flex justify-center">
+      <div className="flex justify-center">
         <button
           className="my-8 p-2 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-full text-white text-xl font-semibold "
           onClick={handleSave}
@@ -106,12 +106,6 @@ export default function ThoughtInput() {
         >
           <FaArrowDown className="stroke-1" />
         </button>
-        <Link
-          href="/history"
-          className="absolute right-0 my-8 p-2 bg-teal-400 hover:bg-teal-500 rounded-full text-white text-xl font-semibold"
-        >
-          <FaClockRotateLeft />
-        </Link>
       </div>
     </div>
   );
