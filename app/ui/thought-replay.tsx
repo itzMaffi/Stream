@@ -35,50 +35,75 @@ export default function ThoughtReplay({
 
   useEffect(() => clearInterval(intervalRef.current), []);
 
-  function handleReplay() {
-    if (!replaying) {
-      setReplaying(true);
-      if (timerRef.current.startTime === -1)
-        timerRef.current.startTime = Date.now();
+  function resetReplayState() {
+    setReplaying(false);
+    setSnapshot(thought.thoughtString);
 
-      timerRef.current.now = Date.now();
+    timerRef.current.now = -1;
+    timerRef.current.startTime = -1;
+    timerRef.current.lastPauseTime = -1;
+    timerRef.current.pauseOffset = -1;
+    timelineRef.current = [...thought.thoughtTimeline];
+  }
 
-      if (timerRef.current.lastPauseTime !== -1)
-        timerRef.current.pauseOffset =
-          timerRef.current.pauseOffset +
-          (timerRef.current.now - timerRef.current.lastPauseTime);
+  function updatePauseOffset() {
+    if (timerRef.current.lastPauseTime !== -1)
+      timerRef.current.pauseOffset =
+        timerRef.current.pauseOffset +
+        (timerRef.current.now - timerRef.current.lastPauseTime);
+  }
 
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => {
-        timerRef.current.now = Date.now();
+  function initOrResumeTimer() {
+    if (timerRef.current.startTime === -1)
+      timerRef.current.startTime = Date.now();
 
-        if (timelineRef.current[0]) {
-          const currentMs =
-            timerRef.current.now -
-            timerRef.current.startTime -
-            timerRef.current.pauseOffset;
-          const currentSnapshot = timelineRef.current[0];
+    timerRef.current.now = Date.now();
 
-          if (currentMs > currentSnapshot.ms) {
-            timelineRef.current.shift();
-            setSnapshot(currentSnapshot.text);
-          }
-        } else {
-          clearInterval(intervalRef.current);
+    updatePauseOffset();
+  }
 
-          setReplaying(false);
-          setSnapshot(thought.thoughtString);
-          timerRef.current.now = -1;
-          timerRef.current.startTime = -1;
-          timerRef.current.lastPauseTime = -1;
-          timerRef.current.pauseOffset = -1;
-          timelineRef.current = [...thought.thoughtTimeline];
-        }
-      }, 10);
+  function hasReachedSanpshot(currentSnapshot: Snapshot) {
+    const currentMs =
+      timerRef.current.now -
+      timerRef.current.startTime -
+      timerRef.current.pauseOffset;
+    return currentMs > currentSnapshot.ms;
+  }
+
+  function processCurrentSnapshot() {
+    const currentSnapshot = timelineRef.current[0];
+
+    if (currentSnapshot && hasReachedSanpshot(currentSnapshot)) {
+      timelineRef.current.shift();
+      setSnapshot(currentSnapshot.text);
     } else {
       clearInterval(intervalRef.current);
-      timerRef.current.lastPauseTime = Date.now();
-      setReplaying(false);
+      resetReplayState();
+    }
+  }
+
+  function startReplay() {
+    setReplaying(true);
+    initOrResumeTimer();
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      timerRef.current.now = Date.now();
+      processCurrentSnapshot();
+    }, 10);
+  }
+
+  function pauseReplay() {
+    clearInterval(intervalRef.current);
+    timerRef.current.lastPauseTime = Date.now();
+    setReplaying(false);
+  }
+
+  function handleReplay() {
+    if (!replaying) {
+      startReplay();
+    } else {
+      pauseReplay();
     }
   }
 
