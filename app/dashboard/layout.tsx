@@ -1,5 +1,11 @@
-export default function Layout({children}: {children: React.ReactNode}) {
+import Sidenav from '../ui/sidenav';
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div>{children}</div>
-  )
+    <>
+      <nav>
+        <Sidenav></Sidenav>
+      </nav>
+      <main className="h-full">{children}</main>
+    </>
+  );
 }
