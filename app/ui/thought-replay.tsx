@@ -70,6 +70,11 @@ export default function ThoughtReplay({
     return currentMs > currentSnapshot.ms;
   }
 
+  function endReplay() {
+    clearInterval(intervalRef.current);
+    resetReplayState();
+  }
+
   function processCurrentSnapshot() {
     const currentSnapshot = timelineRef.current[0];
 
@@ -77,8 +82,7 @@ export default function ThoughtReplay({
       timelineRef.current.shift();
       setSnapshot(currentSnapshot.text);
     } else {
-      clearInterval(intervalRef.current);
-      resetReplayState();
+      endReplay();
     }
   }
 
