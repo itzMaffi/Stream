@@ -1,7 +1,7 @@
 'use client';
 
 import { sono } from './fonts';
-import { FaArrowDown, FaClockRotateLeft } from 'react-icons/fa6';
+import { FaArrowDown, FaTrashCan } from 'react-icons/fa6';
 import {
   ChangeEvent,
   KeyboardEvent,
@@ -23,6 +23,14 @@ export default function ThoughtInput() {
   const [disabled, setDisabled] = useState(true);
   const timelineRef = useRef<Snapshot[]>([]);
   const recorder = useRef({ recording: false, startTime: -1 });
+
+  function resetState() {
+    recorder.current.recording = false;
+    recorder.current.startTime = -1;
+    setThought('');
+    setDisabled(true);
+    timelineRef.current = [];
+  }
 
   function handleChange(event: ChangeEvent<HTMLTextAreaElement>) {
     const thoughtString = event.target.value;
@@ -72,13 +80,14 @@ export default function ThoughtInput() {
 
     startTransition(() => {
       saveThought(timelineRef.current, thought).then(() => {
-        recorder.current.recording = false;
-        recorder.current.startTime = -1;
-        setThought('');
-        setDisabled(true);
-        timelineRef.current = [];
+        resetState();
       });
     });
+  }
+
+  function handleDiscard(event: MouseEvent<HTMLButtonElement>) {
+    event.preventDefault();
+    resetState();
   }
 
   return (
@@ -98,13 +107,21 @@ export default function ThoughtInput() {
         spellCheck={false}
         autoFocus={true}
       ></textarea>
-      <div className="flex justify-center">
+      <div className="my-8 flex justify-between">
         <button
-          className="my-8 p-2 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-full text-white text-xl font-semibold "
+          className="px-4 py-2 flex items-center gap-1 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-2xl text-white font-medium"
           onClick={handleSave}
+        >
+          <FaTrashCan />
+          <p>Discard</p>
+        </button>
+        <button
+          className="px-4 py-2 flex items-center gap-1 bg-teal-400 hover:bg-teal-500 disabled:bg-slate-400 rounded-2xl text-white font-medium"
+          onClick={handleDiscard}
           disabled={disabled}
         >
-          <FaArrowDown className="stroke-1" />
+          <FaArrowDown />
+          <p>Save</p>
         </button>
       </div>
     </div>
