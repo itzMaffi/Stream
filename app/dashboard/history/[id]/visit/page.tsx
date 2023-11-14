@@ -10,6 +10,7 @@ export default async function Visit({ params }: { params: { id: string } }) {
         id: params.id,
       },
       select: {
+        id: true,
         thoughtString: true,
         thoughtTimeline: true,
         createdAt: true,
