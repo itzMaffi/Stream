@@ -15,7 +15,7 @@ export default function ThoughtReplay({
   thought,
 }: {
   thought: {
-    id: string,
+    id: string;
     createdAt: Date;
     thoughtString: string;
     thoughtTimeline: Snapshot[];
@@ -36,57 +36,76 @@ export default function ThoughtReplay({
 
   useEffect(() => clearInterval(intervalRef.current), []);
 
-  function handleReplay() {
-    if (!replaying) {
-      setReplaying(true);
-      if (timerRef.current.startTime === -1)
-        timerRef.current.startTime = Date.now();
+  function pauseReplay() {
+    clearInterval(intervalRef.current);
+    timerRef.current.lastPauseTime = Date.now();
+    setReplaying(false);
+  }
 
+  function initOrUpdateTimer() {
+    if (timerRef.current.startTime === -1)
+      timerRef.current.startTime = Date.now();
+
+    timerRef.current.now = Date.now();
+
+    if (timerRef.current.lastPauseTime !== -1)
+      timerRef.current.pauseOffset =
+        timerRef.current.pauseOffset +
+        (timerRef.current.now - timerRef.current.lastPauseTime);
+  }
+
+  function resetReplayState() {
+    setReplaying(false);
+    setSnapshot(thought.thoughtString);
+    timerRef.current.now = -1;
+    timerRef.current.startTime = -1;
+    timerRef.current.lastPauseTime = -1;
+    timerRef.current.pauseOffset = -1;
+    timelineRef.current = [...thought.thoughtTimeline];
+  }
+
+  function endReplay() {
+    clearInterval(intervalRef.current);
+    resetReplayState();
+  }
+
+  function startReplay() {
+    setReplaying(true);
+    initOrUpdateTimer();
+
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
       timerRef.current.now = Date.now();
 
-      if (timerRef.current.lastPauseTime !== -1)
-        timerRef.current.pauseOffset =
-          timerRef.current.pauseOffset +
-          (timerRef.current.now - timerRef.current.lastPauseTime);
+      if (timelineRef.current[0]) {
+        const currentMs =
+          timerRef.current.now -
+          timerRef.current.startTime -
+          timerRef.current.pauseOffset;
+        const currentSnapshot = timelineRef.current[0];
 
-      clearInterval(intervalRef.current);
-      intervalRef.current = setInterval(() => {
-        timerRef.current.now = Date.now();
-
-        if (timelineRef.current[0]) {
-          const currentMs =
-            timerRef.current.now -
-            timerRef.current.startTime -
-            timerRef.current.pauseOffset;
-          const currentSnapshot = timelineRef.current[0];
-
-          if (currentMs > currentSnapshot.ms) {
-            timelineRef.current.shift();
-            setSnapshot(currentSnapshot.text);
-          }
-        } else {
-          clearInterval(intervalRef.current);
-
-          setReplaying(false);
-          setSnapshot(thought.thoughtString);
-          timerRef.current.now = -1;
-          timerRef.current.startTime = -1;
-          timerRef.current.lastPauseTime = -1;
-          timerRef.current.pauseOffset = -1;
-          timelineRef.current = [...thought.thoughtTimeline];
+        if (currentMs > currentSnapshot.ms) {
+          timelineRef.current.shift();
+          setSnapshot(currentSnapshot.text);
         }
-      }, 10);
+      } else {
+        endReplay();
+      }
+    }, 10);
+  }
+
+  function handleReplay() {
+    if (!replaying) {
+      startReplay();
     } else {
-      clearInterval(intervalRef.current);
-      timerRef.current.lastPauseTime = Date.now();
-      setReplaying(false);
+      pauseReplay();
     }
   }
 
   function handleDelete() {
     startTransition(() => {
       deleteThought(thought.id);
-    })
+    });
   }
 
   return (
@@ -112,10 +131,20 @@ export default function ThoughtReplay({
           <p>Delete</p>
         </button>
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 rounded-2xl text-white font-medium"
+          className="px-4 py-2 flex items-center gap-1 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
           onClick={handleReplay}
         >
-          {replaying ? <><FaPause /><p>Pause</p></> : <><FaArrowRotateLeft /><p>Replay</p></>}
+          {replaying ? (
+            <>
+              <FaPause />
+              <p>Pause</p>
+            </>
+          ) : (
+            <>
+              <FaArrowRotateLeft />
+              <p>Replay</p>
+            </>
+          )}
         </button>
       </div>
     </div>
