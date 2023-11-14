@@ -1,11 +1,11 @@
 'use client';
 
 import { sono } from './fonts';
-import { FaArrowRotateLeft, FaArrowLeft, FaPause } from 'react-icons/fa6';
+import { FaArrowRotateLeft, FaRegTrashCan, FaPause } from 'react-icons/fa6';
 import moment from 'moment';
-import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import { Snapshot } from '../lib/types/snapshot';
+import { deleteThought } from '../lib/actions';
 
 const COLS = 30;
 const ROWS = 15;
@@ -15,6 +15,7 @@ export default function ThoughtReplay({
   thought,
 }: {
   thought: {
+    id: string,
     createdAt: Date;
     thoughtString: string;
     thoughtTimeline: Snapshot[];
@@ -82,6 +83,12 @@ export default function ThoughtReplay({
     }
   }
 
+  function handleDelete() {
+    startTransition(() => {
+      deleteThought(thought.id);
+    })
+  }
+
   return (
     <div className="flex flex-col">
       <p className="py-2 text-slate-400">
@@ -96,13 +103,19 @@ export default function ThoughtReplay({
         value={snapshot}
         disabled
       ></textarea>
-      <div className="my-8 flex justify-center">
+      <div className="my-8 flex justify-between">
+        <button
+          className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
+          onClick={handleDelete}
+        >
+          <FaRegTrashCan />
+          <p>Delete</p>
+        </button>
         <button
           className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 rounded-2xl text-stream-50 font-medium"
           onClick={handleReplay}
         >
           {replaying ? <><FaPause /><p>Pause</p></> : <><FaArrowRotateLeft /><p>Replay</p></>}
-          
         </button>
       </div>
     </div>
