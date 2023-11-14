@@ -1,5 +1,9 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FaPenToSquare, FaClockRotateLeft } from 'react-icons/fa6';
+import clsx from 'clsx';
 
 const links = [
   { name: 'New', href: '/dashboard', icon: FaPenToSquare },
@@ -7,6 +11,7 @@ const links = [
 ];
 
 export default function NavLinks() {
+  const pathname = usePathname();
   return (
     <>
       {links.map((link) => {
@@ -15,10 +20,13 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
-            className="p-4 rounded-2xl flex items-center bg-stream-50 text-stream-800"
+            className={clsx(
+              'p-4 rounded-2xl flex items-center bg-stream-50 text-stream-800',
+              {'bg-stream-400 text-stream-950': pathname === link.href}
+            )}
           >
             <LinkIcon className="me-2" />
-            <p className='font-medium'>{link.name}</p>
+            <p className="font-medium">{link.name}</p>
           </Link>
         );
       })}
