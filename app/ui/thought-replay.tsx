@@ -112,7 +112,7 @@ export default function ThoughtReplay({
           <p>Delete</p>
         </button>
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 rounded-2xl text-stream-50 font-medium"
+          className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 rounded-2xl text-white font-medium"
           onClick={handleReplay}
         >
           {replaying ? <><FaPause /><p>Pause</p></> : <><FaArrowRotateLeft /><p>Replay</p></>}

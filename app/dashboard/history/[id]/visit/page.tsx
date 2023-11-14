@@ -29,7 +29,7 @@ export default async function Visit({ params }: { params: { id: string } }) {
     <div className='h-full flex flex-col'>
       <Link
         href={'/dashboard/history'}
-        className="flex items-center px-4 py-8 sticky top-0 bg-stream-50 rounded-xl text-2xl text-stream-800"
+        className="hidden md:flex items-center px-4 py-8 sticky top-0 bg-stream-50 rounded-xl text-2xl text-stream-800"
       >
         <FaAngleLeft />
         <h1>History</h1>

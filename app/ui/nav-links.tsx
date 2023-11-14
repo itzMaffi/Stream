@@ -21,8 +21,8 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'p-4 rounded-2xl flex items-center bg-stream-50 text-stream-800',
-              {'bg-stream-400 text-stream-950': pathname === link.href}
+              'p-4 rounded-2xl flex-1 flex items-center bg-stream-50 text-stream-800',
+              {'bg-stream-500 text-white': pathname === link.href}
             )}
           >
             <LinkIcon className="me-2" />
