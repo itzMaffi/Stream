@@ -8,7 +8,7 @@ export default function Sidenav() {
           stream
         </h1>
       </div>
-      <div className="flex gap-2 addmd:flex-col flex-row">
+      <div className="flex gap-2 md:flex-col flex-row">
         <NavLinks />
       </div>
       <div className={`hidden md:block grow rounded-2xl bg-stream-50`}></div>
