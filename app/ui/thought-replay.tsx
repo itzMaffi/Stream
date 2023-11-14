@@ -114,7 +114,7 @@ export default function ThoughtReplay({
         {moment(thought.createdAt).format('ddd MMM D YYYY hh:mm A')}
       </p>
       <textarea
-        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} text-lg break-all whitespace-break-spaces`}
+        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} md:text-lg break-all whitespace-break-spaces`}
         cols={COLS}
         rows={ROWS}
         maxLength={MAX_LENGTH}

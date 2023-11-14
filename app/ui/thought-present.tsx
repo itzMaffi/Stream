@@ -16,12 +16,12 @@ export default async function ThoughtPresent({ id }: { id: string }) {
   });
 
   return (
-    <div className="m-4 relative snap-center shrink-0 group">
+    <div className="m-4 relative snap-center shrink-0">
       <p className="py-2 text-slate-400">
         {moment(thought?.createdAt).format('ddd MMM D YYYY hh:mm A')}
       </p>
       <textarea
-        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} text-lg break-all whitespace-break-spaces`}
+        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} md:text-lg break-all whitespace-break-spaces`}
         cols={COLS}
         rows={ROWS}
         maxLength={MAX_LENGTH}
@@ -31,7 +31,7 @@ export default async function ThoughtPresent({ id }: { id: string }) {
       ></textarea>
       <Link
         href={`/dashboard/history/${id}/visit`}
-        className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 md:invisible md:group-hover:visible p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
+        className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
       >
         <FaBookOpen />
         <p>Open</p>

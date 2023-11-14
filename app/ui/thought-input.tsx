@@ -10,7 +10,6 @@ import {
   startTransition,
   useRef,
 } from 'react';
-import Link from 'next/link';
 import { saveThought } from '../lib/actions';
 import { Snapshot } from '../lib/types/snapshot';
 
@@ -93,7 +92,7 @@ export default function ThoughtInput() {
   return (
     <div className="flex flex-col">
       <textarea
-        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none ${sono.className}  text-lg break-all whitespace-break-spaces`}
+        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none ${sono.className} md:text-xl break-all whitespace-break-spaces`}
         cols={COLS}
         rows={ROWS}
         maxLength={MAX_LENGTH}
