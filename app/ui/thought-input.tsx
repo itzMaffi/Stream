@@ -115,7 +115,7 @@ export default function ThoughtInput() {
           <p>Discard</p>
         </button>
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-stream-600 hover:bg-stream-700 disabled:bg-slate-200 rounded-2xl text-white disabled:text-slate-400 font-medium"
+          className="px-4 py-2 flex items-center gap-1 bg-stream-500 hover:bg-stream-600 disabled:bg-slate-200 rounded-2xl text-white disabled:text-slate-400 font-medium"
           onClick={handleSave}
           disabled={disabled}
         >
