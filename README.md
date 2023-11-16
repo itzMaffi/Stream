@@ -54,6 +54,7 @@ DATABASE_URL="mysql://<username>:<password>@<host>:<port>/<dbname>"
 ```
 npm run migrate:dev
 ```
+This command also generates the Prisma client used by the application.
 
 You can read more about Prisma Migrate [here](https://www.prisma.io/docs/concepts/components/prisma-migrate)
 
