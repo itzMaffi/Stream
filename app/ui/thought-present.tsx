@@ -8,13 +8,23 @@ const COLS = 30;
 const ROWS = 15;
 const MAX_LENGTH = COLS * ROWS;
 
+// TODO: Refact it to:
+// export default async function ThoughtPresent(props: IThoughtPresentProps)...
+// Create a new interface: IThoughtPresentProps:
+// export interface IThoughtPresentProps { id: string }
+
 export default async function ThoughtPresent({ id }: { id: string }) {
+
+  // TODO: Consider to use type safety for prisma:
+  // https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety
+  // we should avoid "any" as a type！
   const thought = await prisma.thought.findUnique({
     where: {
       id: id,
     },
   });
 
+  // TODO: Remove any "anytype" from the code
   return (
     <div className="m-4 relative snap-center shrink-0">
       <p className="py-2 text-slate-400">

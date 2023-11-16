@@ -1,4 +1,8 @@
+// TODO: Move this file to:
+// `./types/snapshot.d.ts`
+
 export type Snapshot = {
-  ms: number
-  text: string
-}
+  // TODO: Rename it to `timeElapsed` or `timespan`
+  ms: number;
+  text: string;
+};
