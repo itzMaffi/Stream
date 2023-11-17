@@ -5,6 +5,7 @@ import { FaArrowDown, FaXmark } from "react-icons/fa6";
 import { ChangeEvent, KeyboardEvent, MouseEvent, useState, startTransition, useRef } from "react";
 import { saveThought } from "../lib/actions";
 import { Snapshot } from "../lib/types/snapshot";
+import TextArea from "./text-area";
 
 const COLS = 30;
 const ROWS = 15;
@@ -104,22 +105,7 @@ export default function ThoughtInput() {
   // TODO: Remove any "anytype" from the code
   return (
     <div className="flex flex-col">
-      <textarea
-        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none overflow-hidden ${
-          sono.className
-        } md:text-xl break-all whitespace-break-spaces`}
-        cols={COLS}
-        rows={ROWS}
-        maxLength={MAX_LENGTH}
-        name="thought"
-        value={thought}
-        onKeyDown={handleKeyDown}
-        onChange={handleChange}
-        autoComplete="off"
-        autoCorrect="off"
-        spellCheck={false}
-        autoFocus={true}
-      />
+      <TextArea thought={thought}  handleChange={handleChange} handleKeyDown={handleKeyDown} ></TextArea>
       <div className="my-8 flex justify-between">
         <button
           className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"

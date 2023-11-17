@@ -6,6 +6,7 @@ import moment from "moment";
 import { startTransition, useEffect, useRef, useState } from "react";
 import { Snapshot } from "../lib/types/snapshot";
 import { deleteThought } from "../lib/actions";
+import TextArea from "./text-area";
 
 const COLS = 30;
 const ROWS = 15;
@@ -121,15 +122,8 @@ export default function ThoughtReplay({
   return (
     <div className="flex flex-col">
       <p className="py-2 text-slate-400">{moment(thought.createdAt).format("ddd MMM D YYYY hh:mm A")}</p>
-      <textarea
-        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} overflow-hidden md:text-lg break-all whitespace-break-spaces`}
-        cols={COLS}
-        rows={ROWS}
-        maxLength={MAX_LENGTH}
-        name="thought"
-        value={snapshot}
-        disabled
-      />
+      <TextArea thought={snapshot} isDisabled={true}></TextArea>
+      
       <div className="my-8 flex justify-between">
         <button
           className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"

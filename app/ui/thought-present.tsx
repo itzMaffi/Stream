@@ -3,6 +3,7 @@ import { FaBookOpen } from 'react-icons/fa6';
 import moment from 'moment';
 import prisma from '../lib/db';
 import Link from 'next/link';
+import TextArea from './text-area';
 
 const COLS = 30;
 const ROWS = 15;
@@ -30,15 +31,7 @@ export default async function ThoughtPresent({ id }: { id: string }) {
       <p className="py-2 text-slate-400">
         {moment(thought?.createdAt).format('ddd MMM D YYYY hh:mm A')}
       </p>
-      <textarea
-        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} overflow-hidden md:text-lg break-all whitespace-break-spaces`}
-        cols={COLS}
-        rows={ROWS}
-        maxLength={MAX_LENGTH}
-        name="thought"
-        defaultValue={thought?.thoughtString}
-        disabled
-      ></textarea>
+      <TextArea thought={thought?.thoughtString ??""} isDisabled={true}></TextArea>
       <Link
         href={`/history/${id}/visit`}
         className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
