@@ -74,6 +74,7 @@ export default function ThoughtInput() {
         event.preventDefault();
         if (thoughtString.length < MAX_LENGTH) {
           event.currentTarget.value = thoughtString + " ".repeat(Math.min(4, MAX_LENGTH - thoughtString.length));
+          console.log("total: " + (" ".repeat(Math.min(4, MAX_LENGTH - thoughtString.length))).length);
         }
         break;
       default:
