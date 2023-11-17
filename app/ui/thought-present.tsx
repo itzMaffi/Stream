@@ -31,7 +31,7 @@ export default async function ThoughtPresent({ id }: { id: string }) {
         {moment(thought?.createdAt).format('ddd MMM D YYYY hh:mm A')}
       </p>
       <textarea
-        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} md:text-lg break-all whitespace-break-spaces`}
+        className={`rounded-md p-8 shadow-lg resize-none ${sono.className} overflow-hidden md:text-lg break-all whitespace-break-spaces`}
         cols={COLS}
         rows={ROWS}
         maxLength={MAX_LENGTH}
@@ -40,7 +40,7 @@ export default async function ThoughtPresent({ id }: { id: string }) {
         disabled
       ></textarea>
       <Link
-        href={`/dashboard/history/${id}/visit`}
+        href={`/history/${id}/visit`}
         className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
       >
         <FaBookOpen />

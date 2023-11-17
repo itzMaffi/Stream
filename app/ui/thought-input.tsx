@@ -105,7 +105,7 @@ export default function ThoughtInput() {
   return (
     <div className="flex flex-col">
       <textarea
-        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none ${
+        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none overflow-hidden ${
           sono.className
         } md:text-xl break-all whitespace-break-spaces`}
         cols={COLS}
