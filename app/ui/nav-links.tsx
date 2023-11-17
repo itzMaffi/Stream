@@ -6,8 +6,8 @@ import { FaPenToSquare, FaClockRotateLeft } from 'react-icons/fa6';
 import clsx from 'clsx';
 
 const links = [
-  { name: 'New', href: '/dashboard', icon: FaPenToSquare },
-  { name: 'History', href: '/dashboard/history', icon: FaClockRotateLeft },
+  { name: 'New', href: '/', icon: FaPenToSquare },
+  { name: 'History', href: '/history', icon: FaClockRotateLeft },
 ];
 
 export default function NavLinks() {
