@@ -4,6 +4,7 @@ import moment from 'moment';
 import prisma from '../lib/db';
 import Link from 'next/link';
 import TextArea from './text-area';
+import { Thought } from '@prisma/client';
 
 const COLS = 30;
 const ROWS = 15;
@@ -14,16 +15,16 @@ const MAX_LENGTH = COLS * ROWS;
 // Create a new interface: IThoughtPresentProps:
 // export interface IThoughtPresentProps { id: string }
 
-export default async function ThoughtPresent({ id }: { id: string }) {
+export default async function ThoughtPresent({ thought }: { thought: Thought }) {
 
   // TODO: Consider to use type safety for prisma:
   // https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety
   // we should avoid "any" as a type！
-  const thought = await prisma.thought.findUnique({
-    where: {
-      id: id,
-    },
-  });
+  // const thought = await prisma.thought.findUnique({
+  //   where: {
+  //     id: id,
+  //   },
+  // });
 
   // TODO: Remove any "anytype" from the code
   return (
@@ -33,7 +34,7 @@ export default async function ThoughtPresent({ id }: { id: string }) {
       </p>
       <TextArea thought={thought?.thoughtString ??""} isDisabled={true}></TextArea>
       <Link
-        href={`/history/${id}/visit`}
+        href={`/history/${thought.id}/visit`}
         className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
       >
         <FaBookOpen />
