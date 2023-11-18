@@ -15,7 +15,7 @@ const MAX_LENGTH = COLS * ROWS;
 // Create a new interface: IThoughtPresentProps:
 // export interface IThoughtPresentProps { id: string }
 
-export default async function ThoughtPresent({ thought }: { thought: Thought }) {
+export default function ThoughtPresent({ thought }: { thought: Thought }) {
 
   // TODO: Consider to use type safety for prisma:
   // https://www.prisma.io/docs/concepts/components/prisma-client/advanced-type-safety
