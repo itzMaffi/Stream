@@ -23,6 +23,7 @@ describe.only("Thought Input", () => {
 
     expect(textarea).toBeInTheDocument();
     expect(openLink).toBeInTheDocument();
+    expect(textarea.disabled).toBe(true);
 
   });
 
@@ -48,5 +49,43 @@ describe.only("Thought Input", () => {
   
   })
  
+  const thoughtCases = ["thought1","thought2","thought3"];
+  thoughtCases.forEach((thoughtString)=>{
+    it("should display the thought in a textarea", () => {
+
+      const thought:Thought = {
+        id:"1",
+        thoughtString:thoughtString,
+        thoughtTimeline:"",
+        createdAt:new Date(),
+        updatedAt:new Date()
+      }
+  
+      render(<ThoughtPresent thought={thought} />);
+  
+      const textarea = screen.getByRole("textbox") as HTMLTextAreaElement;
+
+      expect(textarea.value).toBe(thought.thoughtString);
+    });
+  
+  });
+
+  it("should render the thoughtstring of a thought", () => {
+
+    const thought:Thought = {
+      id:"1",
+      thoughtString:"thought value",
+      thoughtTimeline:"",
+      createdAt:new Date(0),
+      updatedAt:new Date()
+    }
+
+    render(<ThoughtPresent thought={thought} />);
+
+    const dateArea = screen.getByTestId("date");
+
+    expect(dateArea.textContent).toBe("Thu Jan 1 1970 01:00 AM");
+
+  });
 
 });
