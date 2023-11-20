@@ -29,7 +29,7 @@ export default function ThoughtPresent({ thought }: { thought: Thought }) {
   // TODO: Remove any "anytype" from the code
   return (
     <div className="m-4 relative snap-center shrink-0">
-      <p data-testId="date" className="py-2 text-slate-400">
+      <p data-testid="date" className="py-2 text-slate-400">
         {moment(thought?.createdAt).format('ddd MMM D YYYY hh:mm A')}
       </p>
       <TextArea thought={thought?.thoughtString ??""} isDisabled={true}></TextArea>

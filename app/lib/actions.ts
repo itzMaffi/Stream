@@ -13,12 +13,12 @@ export async function saveThought(timeline: Snapshot[], thought: string) {
     },
   });
 
-  revalidatePath('/dashboard/history');
+  revalidatePath('/history');
 }
 
 export async function deleteThought(id: string) {
   await prisma.thought.delete({ where: { id: id } });
 
-  revalidatePath('/dashboard/history');
-  redirect('/dashboard/history');
+  revalidatePath('/history');
+  redirect('/history');
 }

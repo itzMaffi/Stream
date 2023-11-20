@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { Thought } from "@prisma/client";
 import Home from "@/app/home";
 
-describe.only("Thought Input", () => {
+describe("Thought Input", () => {
 
   it("should render a text area and an open link", () => {
 

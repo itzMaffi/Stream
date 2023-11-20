@@ -7,23 +7,12 @@ import { startTransition, useEffect, useRef, useState } from "react";
 import { Snapshot } from "../lib/types/snapshot";
 import { deleteThought } from "../lib/actions";
 import TextArea from "./text-area";
+import ParsedThought from "../lib/types/ParsedThought";
 
 const COLS = 30;
 const ROWS = 15;
-const MAX_LENGTH = COLS * ROWS;
 
-export default function ThoughtReplay({
-  thought
-}: // TODO: Create proper type based on those parameters. The type can be named as IThoughtReplayProps, then use
-// export default function ThoughtReplay(props: IThoughtReplayProps)...
-{
-  thought: {
-    id: string;
-    createdAt: Date;
-    thoughtString: string;
-    thoughtTimeline: Snapshot[];
-  };
-}) {
+export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
   // TODO: Make sure all item refered to state should have a definate type!
   // "any" as a type is not allowed!
   // use `useState<T>` instead.
@@ -125,7 +114,7 @@ export default function ThoughtReplay({
       <TextArea thought={snapshot} isDisabled={true}></TextArea>
       
       <div className="my-8 flex justify-between">
-        <button
+        <button data-testid="deleteButton"
           className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
           onClick={handleDelete}
         >
