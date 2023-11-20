@@ -122,6 +122,7 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
           <p>Delete</p>
         </button>
         <button
+          data-testid="replaybutton"
           className="px-4 py-2 flex items-center gap-1 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
           onClick={handleReplay}
         >

@@ -61,4 +61,43 @@ describe("Thought Input", () => {
 
   });
 
+  it("should replay a thought when button is pressed", async () => {
+
+    const thought:Thought = {
+      id:"1",
+      thoughtString:"thought thought thought",
+      thoughtTimeline:JSON.stringify("timeline"),
+      createdAt:new Date(),
+      updatedAt:new Date()
+    }
+
+    const parsedThought = {...thought, thoughtTimeline:[{ ms: 0, text: "tho" },{ ms: 1000, text: "thought" }]}
+
+    render(<ThoughtReplay thought={parsedThought}/>);
+
+    const button = screen.getByTestId("replaybutton") as HTMLButtonElement;
+
+    await userEvent.click(button);
+
+    await timeout(100);
+    
+    let textarea = screen.getByRole("textbox") as HTMLTextAreaElement;
+
+    expect(textarea.value).toBe('tho');
+
+    await timeout(905);
+   
+    expect(textarea.value).toBe('thought');
+
+    await timeout(100);
+    
+    expect(textarea.value).toBe('thought thought thought');
+
+
+  });
+
 });
+
+function timeout(ms:number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
