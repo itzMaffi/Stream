@@ -8,6 +8,7 @@ import { Snapshot } from "../lib/types/snapshot";
 import { deleteThought } from "../lib/actions";
 import TextArea from "./text-area";
 import ParsedThought from "../lib/types/ParsedThought";
+import Timeline from "./timeline";
 
 const COLS = 30;
 const ROWS = 15;
@@ -19,6 +20,10 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
   // See https://www.robinwieruch.de/typescript-react-usestate/
   const [snapshot, setSnapshot] = useState(thought.thoughtString);
   const [replaying, setReplaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  
+  const durationRef = useRef(thought.thoughtTimeline[thought.thoughtTimeline.length-1]?.ms ?? 0);
+  
   const timelineRef = useRef<Snapshot[]>([...thought.thoughtTimeline]);
 
   // TODO: Create proper type based on those parameters.
@@ -69,6 +74,7 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
 
   // TODO: Unit test this
   function startReplay() {
+    
     setReplaying(true);
     initOrUpdateTimer();
 
@@ -78,10 +84,12 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
 
       if (timelineRef.current[0]) {
         // TODO: Rename to `timeElapsed`. `currentMs` is ambiguous.
-        const currentMs = timerRef.current.now - timerRef.current.startTime - timerRef.current.pauseOffset;
+        const elapsedTime = timerRef.current.now - timerRef.current.startTime - timerRef.current.pauseOffset;
         const currentSnapshot = timelineRef.current[0];
 
-        if (currentMs > currentSnapshot.ms) {
+        setCurrentTime(elapsedTime)
+
+        if (elapsedTime > currentSnapshot.ms) {
           timelineRef.current.shift();
           setSnapshot(currentSnapshot.text);
         }
@@ -112,7 +120,7 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
     <div className="flex flex-col">
       <p className="py-2 text-slate-400">{moment(thought.createdAt).format("ddd MMM D YYYY hh:mm A")}</p>
       <TextArea thought={snapshot} isDisabled={true}></TextArea>
-      
+      <Timeline currentTime={currentTime} duration={durationRef.current}></Timeline>
       <div className="my-8 flex justify-between">
         <button data-testid="deleteButton"
           className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
@@ -138,7 +146,7 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
             </>
           )}
         </button>
-      </div>
+      T</div>
     </div>
   );
 }
