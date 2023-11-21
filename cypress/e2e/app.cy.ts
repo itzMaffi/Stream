@@ -4,24 +4,55 @@
 // https://github.com/cypress-io/eslint-plugin-cypress
 
 // Cypress E2E Test
-describe("Navigation", () => {
+describe("Homepage", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000/");
   });
 
   it("should navigate to the main page", () => {
-    // Find a link with an href attribute containing "about" and click it
-    // cy.get('a[href*="about"]').click();
-
-    // // The new url should include "/about"
-    // cy.url().should("include", "/about");
-
-    // The new page should contain an h1 with "About page"
     cy.get(".h-full > .hidden").contains("New");
+    cy.get('[href="/history"]').contains("History");
+    cy.get(".gap-2 > .bg-stream-500").contains("New");
+  });
+
+  it("should have a history button that navigates to the history page", () => {
     cy.get('[href="/history"]')
-      .contains("History")
+      .click()
+      .url()
+      .should("include", "/history");
+  });
+
+  it("should create a new note", () => {
+    cy.get(".rounded-md").type("text for test, and then clear the text");
+
+    cy.get(".bg-red-400")
       .should("exist")
       .click();
+
+    cy.get(".rounded-md").should("be.empty");
+
+    cy.get(".rounded-md").type("text for test, and then save the text");
+
+    cy.get(".my-8 > .bg-stream-500").click();
+  });
+});
+
+describe("History", () => {
+  beforeEach(() => {
+    cy.visit("http://localhost:3000/history");
+  });
+
+  it("should navigate to the history page", () => {
+    cy.get('[href="/"]')
+      .should("exist")
+      .contains("New")
+      .click()
+      .url()
+      .should("include", "/");
+  });
+
+  it("should navigate to the history page", () => {
+    cy.get('[href="/"]');
   });
 });
 
