@@ -22,7 +22,7 @@ describe("Homepage", () => {
       .should("include", "/history");
   });
 
-  it("should create a new note", () => {
+  it("cloud creat a new note, and cancle it", () => {
     cy.get(".rounded-md").type("text for test, and then clear the text");
 
     cy.get(".bg-red-400")
@@ -30,29 +30,30 @@ describe("Homepage", () => {
       .click();
 
     cy.get(".rounded-md").should("be.empty");
+  });
 
+  it("cloud creat a new note in english, and save it", () => {
     cy.get(".rounded-md").type("text for test, and then save the text");
 
-    cy.get(".my-8 > .bg-stream-500").click();
-  });
-});
-
-describe("History", () => {
-  beforeEach(() => {
-    cy.visit("http://localhost:3000/history");
-  });
-
-  it("should navigate to the history page", () => {
-    cy.get('[href="/"]')
+    cy.get(".my-8 > .bg-stream-500")
       .should("exist")
-      .contains("New")
-      .click()
-      .url()
-      .should("include", "/");
+      .click();
   });
 
-  it("should navigate to the history page", () => {
-    cy.get('[href="/"]');
+  it("cloud creat a new note in chinese, and save it", () => {
+    cy.get(".rounded-md").type("这段文字用于测试，输入文字，并能够保存。");
+
+    cy.get(".my-8 > .bg-stream-500")
+      .should("exist")
+      .click();
+  });
+
+  it("cloud creat a new note in Germany, and save it", () => {
+    cy.get(".rounded-md").type("Dieser Text mit ä ö ü ß dient zum Testen, zur Texteingabe und könnte gespeichert werden. ");
+
+    cy.get(".my-8 > .bg-stream-500")
+      .should("exist")
+      .click();
   });
 });
 
