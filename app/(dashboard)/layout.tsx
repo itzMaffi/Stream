@@ -1,4 +1,4 @@
-import Sidenav from '../ui/sidenav';
+import Sidenav from "../ui/sidenav";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
@@ -6,7 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <nav>
           <Sidenav></Sidenav>
         </nav>
-        <main className="h-full p-4 grow overflow-y-scroll">{children}</main>
+        <main className="h-full grow overflow-y-scroll">{children}</main>
       </div>
     </>
   );

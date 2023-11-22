@@ -1,3 +1,4 @@
+"use client";
 import { sono } from "./fonts";
 import { FaBookOpen } from "react-icons/fa6";
 import moment from "moment";
@@ -5,6 +6,11 @@ import prisma from "../lib/db";
 import Link from "next/link";
 import TextArea from "./text-area";
 import { Thought } from "@prisma/client";
+import { useState } from "react";
+import {
+  IRecentThought,
+  RecentThoughtService,
+} from "./services/recent-service";
 
 const COLS = 30;
 const ROWS = 15;
@@ -26,18 +32,31 @@ export default function ThoughtPresent({ thought }: { thought: Thought }) {
   // });
 
   // TODO: Remove any "anytype" from the code
+  const recentThoughtService: RecentThoughtService = new RecentThoughtService();
+
+  function handelRecent() {
+    if (!thought) return;
+    const recent = {
+      id: thought.id,
+      digest: recentThoughtService.getDigest(thought.thoughtString),
+    } as IRecentThought;
+    recentThoughtService.save(recent);
+  }
+
   return (
     <div className="m-4 relative snap-center shrink-0">
       <p data-testid="date" className="py-2 text-slate-400">
         {moment(thought?.createdAt).format("ddd MMM D YYYY hh:mm A")}
       </p>
       <TextArea
+        // id={thought?.createdAt}
         thought={thought?.thoughtString ?? ""}
         isDisabled={true}
       ></TextArea>
       <Link
         href={`/history/${thought.id}/visit`}
-        className="absolute bottom-2 right-2 px-4 py-2 flex items-center gap-1 p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
+        onClick={handelRecent}
+        className="absolute bottom--1 right-2 px-4 py-2 flex items-center gap-1 p-2 bg-stream-500 hover:bg-stream-600 rounded-2xl text-white font-medium"
       >
         <FaBookOpen />
         <p>Open</p>

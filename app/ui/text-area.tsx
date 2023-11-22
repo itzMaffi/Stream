@@ -1,5 +1,7 @@
 import { ChangeEvent, KeyboardEvent } from "react";
 import { sono } from "./fonts";
+import { Thought } from "@prisma/client";
+import prisma from "../lib/db";
 
 const COLS = 30;
 const ROWS = 15;

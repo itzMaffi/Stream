@@ -27,13 +27,15 @@ export default async function Visit({ params }: { params: { id: string } }) {
 
   return (
     <div className="h-full flex flex-col">
-      <Link
-        href={"/history"}
-        className="hidden md:flex items-center px-4 py-8 sticky top-0 bg-stream-50 rounded-xl text-2xl text-stream-800"
-      >
-        <FaAngleLeft />
-        <h1>History</h1>
-      </Link>
+      <div className="z-10 sticky top-0 bg-white pt-4">
+        <Link
+          href={"/history"}
+          className="hidden md:flex items-center px-4 py-8 sticky top-0 bg-stream-50 rounded-xl text-2xl text-stream-800"
+        >
+          <FaAngleLeft />
+          <h1>History</h1>
+        </Link>
+      </div>
       <div className="grow flex items-center justify-center">
         {parsedThought && (
           <ThoughtReplay thought={parsedThought}></ThoughtReplay>
