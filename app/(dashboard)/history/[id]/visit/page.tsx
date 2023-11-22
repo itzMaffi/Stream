@@ -1,7 +1,7 @@
-import prisma from '@/app/lib/db';
-import ThoughtReplay from '@/app/ui/thought-replay';
-import Link from 'next/link';
-import { FaAngleLeft } from 'react-icons/fa6';
+import prisma from "@/app/lib/db";
+import ThoughtReplay from "@/app/ui/thought-replay";
+import Link from "next/link";
+import { FaAngleLeft } from "react-icons/fa6";
 
 export default async function Visit({ params }: { params: { id: string } }) {
   const parsedThought = await prisma.thought
@@ -26,9 +26,9 @@ export default async function Visit({ params }: { params: { id: string } }) {
     });
 
   return (
-    <div className='h-full flex flex-col'>
+    <div className="h-full flex flex-col">
       <Link
-        href={'/dashboard/history'}
+        href={"/history"}
         className="hidden md:flex items-center px-4 py-8 sticky top-0 bg-stream-50 rounded-xl text-2xl text-stream-800"
       >
         <FaAngleLeft />
