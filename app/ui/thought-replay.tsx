@@ -1,6 +1,5 @@
 "use client";
 
-import { sono } from "./fonts";
 import { FaArrowRotateLeft, FaRegTrashCan, FaPause } from "react-icons/fa6";
 import moment from "moment";
 import { startTransition, useEffect, useRef, useState } from "react";
@@ -28,10 +27,6 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
 
   // TODO: Create proper type based on those parameters.
   const timerRef = useRef({
-    startTime: -1,
-    lastPauseTime: -1,
-    pauseOffset: -1,
-    now: -1,
     elapsedTime: 0
   });
   // timerRef cannot be bundled as an object in replaying because the setInterval callback will reference the initial value of the state.
@@ -43,43 +38,23 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
 
   function pauseReplay() {
     clearInterval(intervalRef.current);
-    timerRef.current.lastPauseTime = Date.now();
     setReplaying(false);
   }
 
-  function initOrUpdateTimer() {
-    if (timerRef.current.startTime === -1) timerRef.current.startTime = Date.now();
-
-    timerRef.current.now = Date.now();
-
-    if (timerRef.current.lastPauseTime !== -1)
-      timerRef.current.pauseOffset = timerRef.current.pauseOffset + (timerRef.current.now - timerRef.current.lastPauseTime);
-  }
-
-  // TODO: Unit test this
   function resetReplayState() {
     setReplaying(false);
     setSnapshot(thought.thoughtString);
-    timerRef.current.now = -1;
-    timerRef.current.startTime = -1;
-    timerRef.current.lastPauseTime = -1;
-    timerRef.current.pauseOffset = -1;
     timerRef.current.elapsedTime = 0;
-
-    timelineRef.current = [...thought.thoughtTimeline];
   }
 
-  // TODO: Unit test this
   function endReplay() {
     clearInterval(intervalRef.current);
     resetReplayState();
   }
 
-  // TODO: Unit test this
   function startReplay() {
     
     setReplaying(true);
-    initOrUpdateTimer();
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -88,14 +63,11 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
 
       setElapsedTime(currentElapsedTime);
       
-      timerRef.current.now = Date.now();
-
       if (currentElapsedTime < durationRef.current ) {
 
         const currentSnapshot = timelineRef.current.find((value)=> value.ms >= currentElapsedTime );
 
         if (currentSnapshot) {
-          //timelineRef.current.shift();
           setSnapshot(currentSnapshot.text);
         }
       } else {
