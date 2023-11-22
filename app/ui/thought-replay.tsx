@@ -20,10 +20,10 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
   // See https://www.robinwieruch.de/typescript-react-usestate/
   const [snapshot, setSnapshot] = useState(thought.thoughtString);
   const [replaying, setReplaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  
-  const durationRef = useRef(thought.thoughtTimeline[thought.thoughtTimeline.length-1]?.ms ?? 0);
-  
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  const durationRef = useRef(thought.thoughtTimeline[thought.thoughtTimeline.length-1]?.ms + 10 ?? 0);
+
   const timelineRef = useRef<Snapshot[]>([...thought.thoughtTimeline]);
 
   // TODO: Create proper type based on those parameters.
@@ -31,7 +31,8 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
     startTime: -1,
     lastPauseTime: -1,
     pauseOffset: -1,
-    now: -1
+    now: -1,
+    elapsedTime: 0
   });
   // timerRef cannot be bundled as an object in replaying because the setInterval callback will reference the initial value of the state.
   // Instead, we need to mutate the value of the property of the object, keeping the refernce intact. Additionally, it is not used for rendering.
@@ -63,6 +64,8 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
     timerRef.current.startTime = -1;
     timerRef.current.lastPauseTime = -1;
     timerRef.current.pauseOffset = -1;
+    timerRef.current.elapsedTime = 0;
+
     timelineRef.current = [...thought.thoughtTimeline];
   }
 
@@ -80,17 +83,19 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
+      timerRef.current.elapsedTime = timerRef.current.elapsedTime+10;
+      const currentElapsedTime = timerRef.current.elapsedTime;
+
+      setElapsedTime(currentElapsedTime);
+      
       timerRef.current.now = Date.now();
 
-      if (timelineRef.current[0]) {
-        // TODO: Rename to `timeElapsed`. `currentMs` is ambiguous.
-        const elapsedTime = timerRef.current.now - timerRef.current.startTime - timerRef.current.pauseOffset;
-        const currentSnapshot = timelineRef.current[0];
+      if (currentElapsedTime < durationRef.current ) {
 
-        setCurrentTime(elapsedTime)
+        const currentSnapshot = timelineRef.current.find((value)=> value.ms >= currentElapsedTime );
 
-        if (elapsedTime > currentSnapshot.ms) {
-          timelineRef.current.shift();
+        if (currentSnapshot) {
+          //timelineRef.current.shift();
           setSnapshot(currentSnapshot.text);
         }
       } else {
@@ -115,12 +120,23 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
     });
   }
 
+  function onTimeChange(time:number){
+    setElapsedTime(time);
+    timerRef.current.elapsedTime = time;
+    const currentSnapshot = timelineRef.current.find((value)=> value.ms >= time );
+
+        if (currentSnapshot) {
+          //timelineRef.current.shift();
+          setSnapshot(currentSnapshot.text);
+        }
+  }
+
   // TODO: Remove any "anytype" from the code
   return (
     <div className="flex flex-col">
       <p className="py-2 text-slate-400">{moment(thought.createdAt).format("ddd MMM D YYYY hh:mm A")}</p>
       <TextArea thought={snapshot} isDisabled={true}></TextArea>
-      <Timeline currentTime={currentTime} duration={durationRef.current}></Timeline>
+      <Timeline currentTime={elapsedTime} setElapsedTime={onTimeChange} duration={durationRef.current} timelineRef={timelineRef}></Timeline>
       <div className="my-8 flex justify-between">
         <button data-testid="deleteButton"
           className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
@@ -146,7 +162,7 @@ export default function ThoughtReplay({ thought }:{ thought: ParsedThought; }) {
             </>
           )}
         </button>
-      T</div>
+      </div>
     </div>
   );
 }
