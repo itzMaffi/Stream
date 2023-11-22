@@ -41,8 +41,8 @@ export default function Timeline({
               height: "100%",
             }}
           >
-            {timelineEvents.map((el) => (
-              <div
+            {timelineEvents.map((el, key) => (
+              <div key={key}
                 style={{
                   position: "absolute",
                   display: "inline",

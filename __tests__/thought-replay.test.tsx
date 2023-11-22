@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import ThoughtReplay from "../app/ui/thought-replay";
 import userEvent from '@testing-library/user-event';
 import { Thought } from "@prisma/client";
@@ -71,29 +71,31 @@ describe("Thought Input", () => {
       updatedAt:new Date()
     }
 
-    const parsedThought = {...thought, thoughtTimeline:[{ ms: 0, text: "tho" },{ ms: 1000, text: "thought" }]}
+    const parsedThought = {...thought, thoughtTimeline:[{ ms: 40, text: "tho" },{ ms: 1000, text: "thought" }]}
 
     render(<ThoughtReplay thought={parsedThought}/>);
 
     const button = screen.getByTestId("replaybutton") as HTMLButtonElement;
 
-    await userEvent.click(button);
-
-    await timeout(100);
-    
     let textarea = screen.getByRole("textbox") as HTMLTextAreaElement;
 
+    expect(textarea.value).toBe('thought thought thought');
+
+    jest.useFakeTimers();
+    
+    userEvent.click(button)
+  
+    await act(()=>jest.advanceTimersByTimeAsync(40));
+    
     expect(textarea.value).toBe('tho');
 
-    await timeout(905);
+    await act(()=>jest.advanceTimersByTimeAsync(960));
    
     expect(textarea.value).toBe('thought');
 
+    jest.useRealTimers();
+
     await timeout(100);
-    
-    expect(textarea.value).toBe('thought thought thought');
-
-
   });
 
 });

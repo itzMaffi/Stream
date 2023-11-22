@@ -66,8 +66,7 @@ export default function ThoughtReplay({ thought }: { thought: ParsedThought }) {
 
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
-      timerRef.current.elapsedTime =
-        timerRef.current.elapsedTime + 10 * timerRef.current.speedModifier;
+      
       const currentElapsedTime = timerRef.current.elapsedTime;
 
       setElapsedTime(currentElapsedTime);
@@ -83,6 +82,9 @@ export default function ThoughtReplay({ thought }: { thought: ParsedThought }) {
       } else {
         endReplay();
       }
+
+      timerRef.current.elapsedTime =
+        timerRef.current.elapsedTime + 10 * timerRef.current.speedModifier;
     }, 10);
   }
 
