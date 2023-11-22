@@ -102,10 +102,13 @@ export default function ThoughtInput() {
     resetState();
   }
 
+  const charactersLeft = 450-thought.length;
+  const charactersLeftCss = `ml-auto ${charactersLeft < 100 ? "text-red-400" : "text-stream-500"}`
   // TODO: Remove any "anytype" from the code
   return (
     <div className="flex flex-col">
       <TextArea thought={thought}  handleChange={handleChange} handleKeyDown={handleKeyDown} ></TextArea>
+      <div className={charactersLeftCss} > characters left: {charactersLeft} </div>
       <div className="my-8 flex justify-between">
         <button
           className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
