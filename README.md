@@ -1,6 +1,6 @@
 # stream
 stream is journaling app where every edit tells a story.
-![Stream ui]([http://i.imgur.com/oo1NT6c.gif](https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/stream.gif))
+![Stream ui](https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/stream.gif)
 
 stream is built on Nextjs 14, Prisma and mySQL and styled using Tailwind. 
 
