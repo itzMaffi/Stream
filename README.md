@@ -6,7 +6,7 @@ stream is built on Nextjs 14, Prisma and mySQL, styled using Tailwind, unit test
 
 ![Stream intro](https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/stream.gif)
 
-![Stream tech stack](https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/techstack.jpg)
+![Stream tech stack]([https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/techstack.jpg](https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/Tech%20stack.jpg))
 
 ## Docs reference
 
