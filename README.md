@@ -1,6 +1,6 @@
 # stream
-stream is journaling app where every edit tells a story.
-stream is built on Nextjs 14, Prisma and mySQL and styled using Tailwind. 
+stream is journaling app where every edit tells a story.  <br>
+stream is built on Nextjs 14, Prisma and mySQL, styled using Tailwind, unit testing with jest and e2e test with cypress. 
                                                         <br>
 
 ![Stream ui](https://github.com/muzixiaowuwuyi/Stream/blob/main/assets/stream.gif)
