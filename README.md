@@ -79,6 +79,6 @@ npm run dev
 ```
 
 ### Contributors 
-Michele Maffei (https://github.com/itzMaffi/)
+Michele Maffei (https://github.com/itzMaffi/) <br>
 Mads Baddsmand (https://github.com/MadsPB/)
 
