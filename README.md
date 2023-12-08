@@ -77,3 +77,7 @@ To start the app
 ```
 npm run dev
 ```
+
+### Contributors 
+Michele Maffei (https://github.com/itzMaffi/)
+
