@@ -11,7 +11,7 @@ stream is built on Nextjs 14, Prisma and mySQL, styled using Tailwind, unit test
 
 ### 0. Prerequisites
 
-stream requires `node 18` and `docker` to run.
+stream requires `node 18` or above, and `docker` to run.
 
 ### 1. Clone and install dependencies
 
@@ -19,23 +19,15 @@ To start, clone this repo and navigate to its folder
 
 ```
 # Using HTTPS
-$ git clone https://github.com/itzMaffi/Stream.git
+$ git clone https://github.com/muzixiaowuwuyi/Stream.git
 
 # Using SSH
-$ git clone git@github.com:itzMaffi/Stream.git
+$ git clone git@github.com:muzixiaowuwuyi/Stream.git
 
 $ cd Stream
 ```
 
 Then run `npm i` to install the app dependencies
-
-You will also need to add a `.env.local` file to the root of the directory
-
-```
-$ touch .env.local
-```
-
-This files is used by Nextjs to load environment variables.
 
 ### 2. Set up Prisma and your database
 
@@ -45,9 +37,10 @@ The first step is to add your database url to the newly created `.env.local` fil
 DATABASE_URL="mysql://<username>:<password>@<host>:<port>/<dbname>"
 ```
 
-**_Start your mySQL server_** and execute the following command to migrate the Prisma schema to your database
+**_Start your mySQL server docker image_** and execute the following command to migrate the Prisma schema to your database
 
 ```
+$ npm run dockerDB
 $ npm run migrate:dev
 ```
 
@@ -70,13 +63,15 @@ $ npm run dev
 
 ### 4. Test the app
 
-Unit test
+#### Unit test
 
 ```
 $ npm run test
 ```
 
-End to end test
+#### End to end test
+
+befor perform end to end test, please make the dev instance is running.
 
 ```
 $ npm run e2e
