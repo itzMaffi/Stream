@@ -1,4 +1,4 @@
 export type Snapshot = {
-  ms: number
-  text: string
-}
+  ms: number;
+  text: string;
+};

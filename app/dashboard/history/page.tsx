@@ -12,8 +12,10 @@ export default async function History() {
   });
 
   return (
-    <div className='flex flex-col'>
-      <h1 className='hidden md:block px-4 py-8 z-10 sticky top-0 bg-stream-50 rounded-xl text-2xl text-stream-800'>History</h1>
+    <div className="flex flex-col">
+      <h1 className="sticky top-0 z-10 hidden rounded-xl bg-stream-50 px-4 py-8 text-2xl text-stream-800 md:block">
+        History
+      </h1>
       <div className="flex flex-wrap justify-center gap-8 ">
         {idObjs &&
           idObjs.map((idObj) => (

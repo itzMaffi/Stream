@@ -92,7 +92,7 @@ export default function ThoughtInput() {
   return (
     <div className="flex flex-col">
       <textarea
-        className={`rounded-md p-8 shadow-lg focus:outline-none resize-none ${sono.className} md:text-xl break-all whitespace-break-spaces`}
+        className={`resize-none rounded-md p-8 shadow-lg focus:outline-none ${sono.className} whitespace-break-spaces break-all md:text-xl`}
         cols={COLS}
         rows={ROWS}
         maxLength={MAX_LENGTH}
@@ -107,14 +107,14 @@ export default function ThoughtInput() {
       ></textarea>
       <div className="my-8 flex justify-between">
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-red-400 hover:bg-red-500 disabled:bg-slate-200 rounded-2xl text-white font-medium"
+          className="flex items-center gap-1 rounded-2xl bg-red-400 px-4 py-2 font-medium text-white hover:bg-red-500 disabled:bg-slate-200"
           onClick={handleDiscard}
         >
           <FaXmark className="text-xl" />
           <p>Discard</p>
         </button>
         <button
-          className="px-4 py-2 flex items-center gap-1 bg-stream-500 hover:bg-stream-600 disabled:bg-slate-200 rounded-2xl text-white disabled:text-slate-400 font-medium"
+          className="flex items-center gap-1 rounded-2xl bg-stream-500 px-4 py-2 font-medium text-white hover:bg-stream-600 disabled:bg-slate-200 disabled:text-slate-400"
           onClick={handleSave}
           disabled={disabled}
         >
