@@ -1,3 +1,5 @@
+![stream](./assets/stream_logo.png)
+
 # stream
 stream is journaling app where every edit tells a story.
 
