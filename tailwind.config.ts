@@ -28,7 +28,7 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         'dawn-pattern':
-          'radial-gradient(100% 50% at 25% 100%, #feb2b2 0%, rgba(252, 184, 219, 0.75) 25%, rgba(239, 194, 250, 0.5) 50%, rgba(190, 227, 248, 0) 100%), linear-gradient(78deg, #d8f4f5 0%, #adecef 14.29%, #97e0e4 28.57%, #82d3d9 42.86%, #6ec7ce 57.14%, #5abac3 71.43%, #2da1ad 100%)',
+          'radial-gradient(100% 50% at 25% 100%, #feb2b2 0%, rgba(252, 184, 219, 0.75) 48%, rgba(239, 194, 250, 0.5) 74%, rgba(190, 227, 248, 0) 100%), linear-gradient(78deg, #d8f4f5 0%, #adecef 14.29%, #97e0e4 28.57%, #82d3d9 42.86%, #6ec7ce 57.14%, #5abac3 87.43%, #2da1ad 100%)',
       },
     },
   },
